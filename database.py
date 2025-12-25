@@ -4,7 +4,7 @@ conn=sqlite3.connect('fiyatTakip.db')
 
 c =conn.cursor()
 
-def veritabanıOlustur():    
+def veritabaniOlustur():    
     c.executescript("""
     CREATE TABLE IF NOT EXISTS urunBilgi(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -22,10 +22,15 @@ def veritabanıOlustur():
             );
     """)
     conn.commit()
-    conn.close()
 
-def veritabanıKayıt():
-    c.execute("INSERT INTO urunBilgi VALUES ()")
+def veritabaniKayit(urunAdi,urunSitesi,urunUrl):
+    c.execute("INSERT INTO urunBilgi (urunAdı,urunSitesi,urunUrl) VALUES (?,?,?)", (urunAdi, urunSitesi, urunUrl))
+    conn.commit()
+
+#veritabaniKayit("amazon","amazon","amazon")
+c.execute("SELECT * FROM urunBilgi")
+print(c.fetchall())
+
 
 
 
