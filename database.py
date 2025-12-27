@@ -107,20 +107,34 @@ def urunSil(urunAdi):
      c.execute("DELETE FROM urunBilgi WHERE urunAdi=?",(urunAdi,))
      conn.commit()
 
+def fiyatGecmisiniGetir(urunAdi):  
+      c.execute("""
+                SELECT 
+                urunAdresi.urunSiteIsmi,
+                urunFiyat.urunFiyat,
+                urunFiyat.urunTarih 
+                FROM urunBilgi  
+                INNER JOIN urunAdresi ON urunBilgi.id = urunAdresi.product_id
+                INNER JOIN urunFiyat ON urunAdresi.id = urunFiyat.link_id
+                WHERE urunBilgi.urunAdi = ?
+                ORDER BY urunFiyat.urunTarih DESC
+                """,(urunAdi,))
+      return c.fetchall()          
+      
 
 
-c.execute("SELECT * FROM urunFiyat")
-bilgiler = c.fetchall()
-for bilgi in bilgiler:
-        print(bilgi)
+# c.execute("SELECT * FROM urunFiyat")
+# bilgiler = c.fetchall()
+# for bilgi in bilgiler:
+#         print(bilgi)
 
-urunSil("test")
-c.execute("SELECT * FROM urunBilgi")
-bilgiler = c.fetchall()
-for bilgi in bilgiler:
-        print(bilgi)
+# urunSil("test")
+# c.execute("SELECT * FROM urunBilgi")
+# bilgiler = c.fetchall()
+# for bilgi in bilgiler:
+#         print(bilgi)
 
-c.execute("SELECT * FROM urunAdresi")
-bilgiler = c.fetchall()
-for bilgi in bilgiler:
-        print(bilgi)
+# c.execute("SELECT * FROM urunAdresi")
+# bilgiler = c.fetchall()
+# for bilgi in bilgiler:
+#         print(bilgi)

@@ -28,6 +28,7 @@ def amazonScraper (url):
     prices=prices.replace("TL","")
     prices=int(prices[0:-3])
     return prices
+    print(prices)
 
 def tredyolScraper (url):
     resuld=requests.get(url, impersonate="chrome110", timeout=10)
