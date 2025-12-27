@@ -88,6 +88,20 @@ def tumUrunleriListele():
           """)        
           return c.fetchall()
 
+def enUcuzunuBul(urunAdi):
+     c.execute("SELECT id FROM urunBilgi WHERE urunAdi=?",(urunAdi,))
+     product_id = c.fetchone()
+
+     if product_id is not None:
+          product_id = product_id[0]
+          c.execute("SELECT MIN(urunGuncelFiyat),urunSiteIsmi FROM urunAdresi WHERE product_id=?",(product_id,))
+          return c.fetchone()
+     else:
+          return "Urun Bulunamadı"
+
+
+print(enUcuzunuBul("test"))
+
 
 
 # c.execute("SELECT * FROM urunFiyat")
