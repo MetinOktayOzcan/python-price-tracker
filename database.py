@@ -103,30 +103,24 @@ def takipListesiniGetir():
      c.execute("SELECT id,urunUrl FROM urunAdresi WHERE urunAktif=1")
      return c.fetchall()
 
-
-# c.execute("SELECT * FROM urunFiyat")
-# bilgiler = c.fetchall()
-# for bilgi in bilgiler:
-#         print(bilgi)
-
-# c.execute("SELECT * FROM urunBilgi")
-# bilgiler = c.fetchall()
-# for bilgi in bilgiler:
-#         print(bilgi)
-
-# c.execute("SELECT * FROM urunAdresi")
-# bilgiler = c.fetchall()
-# for bilgi in bilgiler:
-#         print(bilgi)
-
-        
+def urunSil(urunAdi):
+     c.execute("DELETE FROM urunBilgi WHERE urunAdi=?",(urunAdi,))
+     conn.commit()
 
 
 
+c.execute("SELECT * FROM urunFiyat")
+bilgiler = c.fetchall()
+for bilgi in bilgiler:
+        print(bilgi)
 
+urunSil("test")
+c.execute("SELECT * FROM urunBilgi")
+bilgiler = c.fetchall()
+for bilgi in bilgiler:
+        print(bilgi)
 
-
-
-
-
-
+c.execute("SELECT * FROM urunAdresi")
+bilgiler = c.fetchall()
+for bilgi in bilgiler:
+        print(bilgi)
