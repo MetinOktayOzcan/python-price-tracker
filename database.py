@@ -99,9 +99,9 @@ def enUcuzunuBul(urunAdi):
      else:
           return "Urun Bulunamadı"
 
-
-print(enUcuzunuBul("test"))
-
+def takipListesiniGetir():
+     c.execute("SELECT id,urunUrl FROM urunAdresi WHERE urunAktif=1")
+     return c.fetchall()
 
 
 # c.execute("SELECT * FROM urunFiyat")
