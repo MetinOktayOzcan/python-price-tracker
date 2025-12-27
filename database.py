@@ -46,14 +46,26 @@ def urunEkle(urunAdi):
         c.execute("INSERT INTO urunBilgi (urunAdi,urunEklemeTarihi) VALUES (?,?)", (urunAdi,zaman))
         conn.commit()
 
+def urunUrlEkle(urunAdi,urunSiteIsmi,urunUrl,urunAktif,urunGuncelFiyat):
+    c.execute("SELECT id FROM urunBilgi WHERE urunAdi=?",(urunAdi,))
+    product_id = c.fetchone()
 
-# #Veritabanı testi için eklenen kodlar
-# urunEkle("test")
+    if product_id is not None:
+        product_id= product_id[0]
+        try:
+                c.execute("INSERT INTO urunAdresi (product_id, urunSiteIsmi, urunUrl, urunAktif, urunGuncelFiyat) VALUES (?,?,?,?,?)", 
+                        (product_id, urunSiteIsmi, urunUrl, urunAktif, urunGuncelFiyat))
+                conn.commit()
+        except sqlite3.IntegrityError:
+             return "HATA:Vertitabanında bu url ile kayıt mevcut"
+    else:
+         return "Bu isimle bir ürün bulunmuyor"    
 
-# c.execute("SELECT * FROM urunBilgi")
+
+# c.execute("SELECT * FROM urunAdresi")
 # bilgiler = c.fetchall()
 # for bilgi in bilgiler:
-#     print(bilgi)
+#         print(bilgi)
 
         
 
