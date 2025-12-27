@@ -61,11 +61,26 @@ def urunUrlEkle(urunAdi,urunSiteIsmi,urunUrl,urunAktif,urunGuncelFiyat):
     else:
          return "Bu isimle bir ürün bulunmuyor"    
 
+def urunFiyatGuncelle(urunLinki,urunFiyat):
+     c.execute("SELECT id FROM urunAdresi WHERE urunUrl=?",(urunLinki,))
+     urunLinki = c.fetchone()
 
-# c.execute("SELECT * FROM urunAdresi")
-# bilgiler = c.fetchall()
-# for bilgi in bilgiler:
-#         print(bilgi)
+     if urunLinki is not None:
+          urunTarih = datetime.datetime.now()
+          urunLinki = urunLinki[0]
+          c.execute("INSERT INTO urunFiyat (link_id,urunFiyat,urunTarih) VALUES (?,?,?)",(urunLinki,urunFiyat,urunTarih))
+          conn.commit()
+     else:
+          return "Urun Bulunamadı"             
+          
+
+
+urunFiyatGuncelle("www.amazon.com",100)
+
+c.execute("SELECT * FROM urunFiyat")
+bilgiler = c.fetchall()
+for bilgi in bilgiler:
+        print(bilgi)
 
         
 
