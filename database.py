@@ -119,8 +119,17 @@ def fiyatGecmisiniGetir(urunAdi):
                 WHERE urunBilgi.urunAdi = ?
                 ORDER BY urunFiyat.urunTarih DESC
                 """,(urunAdi,))
-      return c.fetchall()          
-      
+      return c.fetchall()      
+
+def linkDurumDegistir(link,durum):
+     c.execute("UPDATE urunAdresi SET urunAktif=? WHERE urunURL=?",(durum,link))
+     conn.commit()
+
+def tekLinkSil(link):
+     c.execute("DELETE FROM urunAdresi WHERE urunUrl=?",(link,))
+     conn.commit()
+         
+tekLinkSil("www.amazon.com")
 
 
 # c.execute("SELECT * FROM urunFiyat")
@@ -134,7 +143,7 @@ def fiyatGecmisiniGetir(urunAdi):
 # for bilgi in bilgiler:
 #         print(bilgi)
 
-# c.execute("SELECT * FROM urunAdresi")
-# bilgiler = c.fetchall()
-# for bilgi in bilgiler:
-#         print(bilgi)
+c.execute("SELECT * FROM urunAdresi")
+bilgiler = c.fetchall()
+for bilgi in bilgiler:
+        print(bilgi)
