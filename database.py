@@ -69,18 +69,41 @@ def urunFiyatGuncelle(urunLinki,urunFiyat):
           urunTarih = datetime.datetime.now()
           urunLinki = urunLinki[0]
           c.execute("INSERT INTO urunFiyat (link_id,urunFiyat,urunTarih) VALUES (?,?,?)",(urunLinki,urunFiyat,urunTarih))
+          c.execute("UPDATE urunAdresi set urunGuncelFiyat=? WHERE id=?",(urunFiyat,urunLinki))
           conn.commit()
      else:
-          return "Urun Bulunamadı"             
-          
+          return "Urun Bulunamadı"  
+
+def tumUrunleriListele():
+          c.execute("""
+        SELECT
+                urunBilgi.urunAdi,
+                urunBilgi.urunEklemeTarihi,
+                urunAdresi.urunSiteIsmi,
+                urunAdresi.urunUrl,
+                urunAdresi.urunAktif,
+                urunAdresi.urunGuncelFiyat
+        FROM 
+                urunBilgi INNER JOIN urunAdresi ON urunBilgi.id = urunAdresi.product_id
+          """)        
+          return c.fetchall()
 
 
-urunFiyatGuncelle("www.amazon.com",100)
 
-c.execute("SELECT * FROM urunFiyat")
-bilgiler = c.fetchall()
-for bilgi in bilgiler:
-        print(bilgi)
+# c.execute("SELECT * FROM urunFiyat")
+# bilgiler = c.fetchall()
+# for bilgi in bilgiler:
+#         print(bilgi)
+
+# c.execute("SELECT * FROM urunBilgi")
+# bilgiler = c.fetchall()
+# for bilgi in bilgiler:
+#         print(bilgi)
+
+# c.execute("SELECT * FROM urunAdresi")
+# bilgiler = c.fetchall()
+# for bilgi in bilgiler:
+#         print(bilgi)
 
         
 
