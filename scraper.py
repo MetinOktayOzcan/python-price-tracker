@@ -24,7 +24,7 @@ def amazonScraper (url):
         prices=int(prices[0:-3])
         return prices
     except Exception as e:
-        return "HATA:{}".format(e)
+        return None
 
 def trendyolScraper (url):
     try:
@@ -36,4 +36,4 @@ def trendyolScraper (url):
         prices=int(prices.replace(" TL",""))
         return prices
     except Exception as e:
-        return "HATA:{}".format(e)
+        return None

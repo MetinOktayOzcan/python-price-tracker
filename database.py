@@ -87,6 +87,10 @@ def tumUrunleriListele():
                 urunBilgi INNER JOIN urunAdresi ON urunBilgi.id = urunAdresi.product_id
           """)        
           return c.fetchall()
+def tumUrunlerinIsminiListele():
+     c.execute("SELECT urunAdi FROM urunBilgi")
+     return c.fetchall()
+
 
 def enUcuzunuBul(urunAdi):
      c.execute("SELECT id FROM urunBilgi WHERE urunAdi=?",(urunAdi,))
@@ -119,8 +123,8 @@ def fiyatGecmisiniGetir(urunAdi):
                 WHERE urunBilgi.urunAdi = ?
                 ORDER BY urunFiyat.urunTarih DESC
                 """,(urunAdi,))
-      return c.fetchall()      
-
+      return c.fetchall()    
+        
 def linkDurumDegistir(link,durum):
      c.execute("UPDATE urunAdresi SET urunAktif=? WHERE urunURL=?",(durum,link))
      conn.commit()
@@ -128,8 +132,20 @@ def linkDurumDegistir(link,durum):
 def tekLinkSil(link):
      c.execute("DELETE FROM urunAdresi WHERE urunUrl=?",(link,))
      conn.commit()
-         
-tekLinkSil("www.amazon.com")
+def urunLinkiniGetir(urunAdi):
+     c.execute("""
+        SELECT
+                urunBilgi.urunAdi,
+                urunAdresi.urunSiteIsmi,
+                urunAdresi.urunUrl,
+                urunAdresi.urunAktif,
+                urunAdresi.urunGuncelFiyat
+        FROM 
+                urunBilgi INNER JOIN urunAdresi ON urunBilgi.id = urunAdresi.product_id
+                WHERE urunBilgi.urunAdi =?
+          """,(urunAdi,))        
+     return c.fetchall()
+
 
 
 # c.execute("SELECT * FROM urunFiyat")
@@ -137,13 +153,12 @@ tekLinkSil("www.amazon.com")
 # for bilgi in bilgiler:
 #         print(bilgi)
 
-# urunSil("test")
 # c.execute("SELECT * FROM urunBilgi")
 # bilgiler = c.fetchall()
 # for bilgi in bilgiler:
 #         print(bilgi)
 
-c.execute("SELECT * FROM urunAdresi")
-bilgiler = c.fetchall()
-for bilgi in bilgiler:
-        print(bilgi)
+# c.execute("SELECT * FROM urunAdresi")
+# bilgiler = c.fetchall()
+# for bilgi in bilgiler:
+#         print(bilgi)
