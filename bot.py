@@ -4,14 +4,23 @@ import time
 
 def botFiyatTakip():
     veriler = database.takipListesiniGetir()
-    link=veriler[1]
 
     if not veriler:
         print("veri bulunmuyor")
         return
 
-    cekilenFiyat=scraper.scraper(link)
-    database.urunFiyatGuncelle(link,cekilenFiyat)
-    time.sleep(7)
+    for veri in veriler:
+        link=veri[1]
+        cekilenFiyat=scraper.scraper(link)
+        if cekilenFiyat is not None:
+            database.urunFiyatGuncelle(link,cekilenFiyat)
+            time.sleep(5)
+            print(f"{link[0:15]} {cekilenFiyat} olarak güncellendi")
+        else:
+            print("Fiyat çekilemedi")
 
-botFiyatTakip()
+if __name__ == "__main__":
+    while True:
+        botFiyatTakip()
+        print("tüm linkleri güncellemek için 10 saniye bekleniyor")
+        time.sleep(10)
