@@ -10,6 +10,8 @@ def scraper(url):
         return trendyolScraper(url)
     else:
         return "URL hatali veya Desteklenmeyen web site girdiniz"
+    
+    
 
 
 def amazonScraper (url):
