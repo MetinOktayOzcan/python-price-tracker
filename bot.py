@@ -1,6 +1,7 @@
 import database
 import scraper
 import time
+import notification
 
 def botFiyatTakip():
     veriler = database.takipListesiniGetir()
@@ -16,6 +17,12 @@ def botFiyatTakip():
             database.urunFiyatGuncelle(link,cekilenFiyat)
             time.sleep(5)
             print(f"{link[0:15]} {cekilenFiyat} olarak güncellendi")
+
+            notification.bildirimGonder(
+                "Fiyat Güncellendi", 
+                f"Ürün fiyatı güncellendi: {cekilenFiyat} TL"
+            )
+            
         else:
             print("Fiyat çekilemedi")
 
